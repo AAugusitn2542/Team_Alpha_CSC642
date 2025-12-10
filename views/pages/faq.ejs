@@ -1,0 +1,171 @@
+<%- include('../partials/header') %>
+
+<div class="faq-hero">
+  <div class="faq-icon">
+    <i class="fas fa-question-circle"></i>
+  </div>
+  <h1>Frequently Asked Questions</h1>
+  <p>Find answers to common questions about housing, properties and our services</p>
+</div>
+
+<div class="faq-stats">
+  <div class="stat-card">
+    <h3>24/7</h3>
+    <p>Support Available</p>
+  </div>
+  <div class="stat-card">
+    <h3>300+</h3>
+    <p>Properties Listed</p>
+  </div>
+  <div class="stat-card">
+    <h3>94%</h3>
+    <p>Customer Satisfaction</p>
+  </div>
+</div>
+
+<div class="faq-container">
+  <div class="faq-category">
+    <div class="category-header booking-category">
+      <i class="fas fa-calendar-check"></i>
+      <h2>Booking</h2>
+    </div>
+    <div class="faq-items">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How do I book a property?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Browse available properties, select your desired dates, and click "Join Community". Follow the payment process to complete your booking. You'll receive a confirmation email immediately after payment.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can I cancel and modify my booking?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, you can modify or cancel your booking up to 48 hours before your check-in date. Cancellation fees may apply depending on how close to the check-in date you cancel.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>When is payment due?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Payment is due immediately upon booking confirmation. We accept all major credit cards, PayPal, and other secure payment methods.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-category">
+    <div class="category-header properties-category">
+      <i class="fas fa-building"></i>
+      <h2>Properties</h2>
+    </div>
+    <div class="faq-items">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Are utilities included in rent?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Most of our properties include basic utilities such as water and trash. Electricity, gas, and internet may be separate. Check individual property listings for specific details.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Are pets allowed?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Many of our communities are pet-friendly. Look for the "Pet-Friendly" tag on property listings. Pet deposits and monthly pet fees may apply.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What's the minimum lease term?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Our minimum lease term is typically 6 months. However, some properties offer month-to-month options. Please check individual listings for specific terms.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-category">
+    <div class="category-header movein-category">
+      <i class="fas fa-truck"></i>
+      <h2>Move-in & Move-out</h2>
+    </div>
+    <div class="faq-items">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Is there parking available?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, most of our communities offer dedicated parking spaces. Some properties include parking in the rent, while others charge a separate monthly fee.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How do I get my keys?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Keys can be picked up at the community office on your move-in date. Some properties offer smart lock options with digital access codes.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What happens at the end of my lease?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>You can choose to renew your lease, move to a month-to-month agreement, or move out. We'll contact you 60 days before your lease ends to discuss your options.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="faq-contact">
+  <h2>Still have questions?</h2>
+  <p>Our support team is here to help you</p>
+  <div class="contact-options">
+    <button class="btn btn-primary">
+      <i class="far fa-envelope"></i> Email Us
+    </button>
+    <button class="btn btn-outline">
+      <i class="far fa-comment"></i> Live Chat
+    </button>
+  </div>
+  <div class="contact-info">
+    <p><strong>Email:</strong> support@team-A.com</p>
+    <p><strong>Phone:</strong> 1-800-TEAM-A</p>
+    <p><strong>Office Hours:</strong> Mon-Fri 9AM-6PM</p>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.faq-question').forEach(question => {
+  question.addEventListener('click', function() {
+    const faqItem = this.parentElement;
+    const wasActive = faqItem.classList.contains('active');
+
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    if (!wasActive) {
+      faqItem.classList.add('active');
+    }
+  });
+});
+</script>
+
+<%- include('../partials/footer') %>

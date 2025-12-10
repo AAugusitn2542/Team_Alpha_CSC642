@@ -1,0 +1,148 @@
+<%- include('../partials/header') %>
+
+<div class="hero-section">
+  <div class="hero-content">
+    <h1>Find your community find and book an Affordable home</h1>
+    <div class="search-bar">
+      <input type="text" placeholder="Location" class="search-input">
+      <input type="text" placeholder="Community" class="search-input">
+      <input type="text" placeholder="Move-in-Date" class="search-input">
+      <input type="text" placeholder="Move-out-Date" class="search-input">
+      <button class="btn btn-primary">Search</button>
+    </div>
+    <div class="quick-filters">
+      <button class="filter-tag">San Jose</button>
+      <button class="filter-tag">Oakland</button>
+      <button class="filter-tag">Fremont</button>
+    </div>
+  </div>
+</div>
+
+<div class="main-container">
+  <aside class="sidebar">
+    <div class="filters-section">
+      <h3>Filters</h3>
+
+      <div class="filter-group">
+        <label>Date Range</label>
+        <div class="date-inputs">
+          <input type="date" placeholder="Start">
+          <span>to</span>
+          <input type="date" placeholder="End">
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Price Range</label>
+        <div class="price-inputs">
+          <input type="number" placeholder="Min" class="price-input">
+          <input type="number" placeholder="Max" class="price-input">
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label># of months</label>
+        <input type="number" min="1" value="1" class="months-input">
+      </div>
+
+      <div class="filter-group">
+        <h4>Community Interests</h4>
+        <label class="checkbox-label">
+          <input type="checkbox"> All Interests
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox"> Pet Friendly
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox"> Senior Activity
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox"> Pickleball
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Amenities</h4>
+        <label class="checkbox-label">
+          <input type="checkbox"> Pets
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox"> 24/7 Fitness
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox"> Pool
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox"> Dry/Washer
+        </label>
+      </div>
+
+      <div class="calendar-widget">
+        <div class="calendar-header">
+          <button class="calendar-nav">&lt;</button>
+          <span>January 2025</span>
+          <button class="calendar-nav">&gt;</button>
+        </div>
+        <div class="calendar-grid">
+          <div class="calendar-day-header">Su</div>
+          <div class="calendar-day-header">Mo</div>
+          <div class="calendar-day-header">Tu</div>
+          <div class="calendar-day-header">We</div>
+          <div class="calendar-day-header">Th</div>
+          <div class="calendar-day-header">Fr</div>
+          <div class="calendar-day-header">Sa</div>
+          <% for (let i = 1; i <= 31; i++) { %>
+            <div class="calendar-day"><%= i %></div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content-area">
+    <div class="map-section">
+      <div id="map" class="map-container">
+        <img src="https://images.pexels.com/photos/5605061/pexels-photo-5605061.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Map" class="map-image">
+        <div class="map-marker" style="top: 50%; left: 50%;">
+          <div class="marker-pin">A</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="communities-grid">
+      <% communities.forEach(function(community) { %>
+        <div class="community-card">
+          <div class="card-image">
+            <img src="<%= community.image_url %>" alt="<%= community.name %>">
+            <button class="favorite-btn">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          <div class="card-content">
+            <h3><%= community.name %></h3>
+            <div class="card-tags">
+              <% (community.tags || []).slice(0, 3).forEach(function(tag) { %>
+                <span class="tag"><%= tag %></span>
+              <% }); %>
+            </div>
+            <div class="card-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span><%= community.location %></span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-users"></i>
+                <span><%= community.residents_count %> residents</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="price">$<%= community.price_per_night %> / night</div>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

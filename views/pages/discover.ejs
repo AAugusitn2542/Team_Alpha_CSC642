@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Communities</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <!-- Hero Section -->
+  <div class="discover-hero">
+    <div class="discover-hero-content">
+      <div class="discover-icon">👥</div>
+      <h1>Discover Communities</h1>
+      <p>Find your tribe and connect with like-minded neighbors<br>and build lasting relationships</p>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="discover-container">
+    <div class="discover-filters">
+      <div class="filter-header">
+        <i class="fas fa-filter"></i>
+        <span>Filter by Interest</span>
+      </div>
+      <div class="filter-options">
+        <% if (filterOptions) { %>
+          <% filterOptions.forEach(option => { %>
+            <a href="/communities<%= option !== 'All' ? '?filter=' + encodeURIComponent(option) : '' %>" 
+               class="filter-btn <%= activeFilter === option ? 'active' : '' %>">
+              <%= option %>
+            </a>
+          <% }); %>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Communities Grid -->
+    <div class="all-communities-section">
+      <h2>
+        <% if (activeFilter && activeFilter !== 'All') { %>
+          <%= activeFilter %> Communities
+        <% } else { %>
+          All Communities
+        <% } %>
+      </h2>
+      <p class="subtitle">
+        <% if (communities && communities.length > 0) { %>
+          <%= communities.length %> communit<%= communities.length === 1 ? 'y' : 'ies' %> found
+        <% } else { %>
+          No communities found
+        <% } %>
+      </p>
+
+      <div class="communities-grid-discover">
+        <% if (communities && communities.length > 0) { %>
+          <% communities.forEach(community => { %>
+            <div class="community-card-discover">
+              <!-- Image Section -->
+              <div class="card-image-discover">
+                <img src="<%= community.image_url || '/images/placeholder.jpg' %>" 
+                     alt="<%= community.name %>"
+                     onerror="this.src='https://via.placeholder.com/350x250?text=Community'">
+                <button class="favorite-btn" onclick="toggleFavorite(event)">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
+
+              <!-- Content Section -->
+              <div class="card-content-discover">
+                <!-- Tags -->
+                <div class="card-tags-discover">
+                  <% if (community.tags && community.tags.length > 0) { %>
+                    <% community.tags.slice(0, 2).forEach(tag => { %>
+                      <span class="tag-discover"><%= tag %></span>
+                    <% }); %>
+                  <% } %>
+                </div>
+
+                <!-- Community Title -->
+                <h3 style="margin-bottom: 1rem; color: var(--text-dark);"><%= community.name %></h3>
+
+                <!-- Community Details -->
+                <div class="card-details">
+                  <!-- Location -->
+                  <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                      <div class="detail-label">Location</div>
+                      <div class="detail-value"><%= community.location %>, <%= community.city %></div>
+                    </div>
+                  </div>
+
+                  <!-- Number of People -->
+                  <div class="detail-item">
+                    <i class="fas fa-users"></i>
+                    <div>
+                      <div class="detail-label">Community Size</div>
+                      <div class="detail-value"><%= community.residents_count %> residents</div>
+                    </div>
+                  </div>
+
+                  <!-- Price -->
+                  <div class="detail-item">
+                    <i class="fas fa-dollar-sign"></i>
+                    <div>
+                      <div class="detail-label">Price</div>
+                      <div class="detail-value">$<%= community.price_per_night %> per night</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Join Button -->
+                <a href="/community/<%= community.id %>" class="btn-join-community">
+                  <i class="fas fa-arrow-right"></i>
+                  View & Book
+                </a>
+              </div>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-light);">
+            <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+            <p style="font-size: 1.1rem;">No communities found matching "<%= activeFilter %>"</p>
+            <a href="/communities" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">
+              View All Communities
+            </a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
+
+  <script>
+    function toggleFavorite(e) {
+      e.preventDefault();
+      const icon = e.target.closest('.favorite-btn').querySelector('i');
+      icon.classList.toggle('far');
+      icon.classList.toggle('fas');
+    }
+  </script>
+</body>
+</html>
