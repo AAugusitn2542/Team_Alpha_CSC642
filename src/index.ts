@@ -77,7 +77,7 @@ app.get('/communities', async (req: Request, res: Response) => {
 
     res.render('pages/discover', {
       communities: communities || [],
-      filterOptions: ['All', 'Students', 'Religion', 'Families', 'Interns', 'Gaming-Nerds', 'Entrepreneurs', 'Pet-Friendly', 'Gym'],
+      filterOptions: ['All', 'Students', 'Influencer', 'Families', 'Interns', 'Gaming-Nerds', 'Entrepreneurs', 'Pet-Friendly', 'Gym'],
       //filterOptions: ['All', 'Modern', 'Young-Professionals', 'Urban', 'Beachside', 'Pet-Friendly', 'Family'],
       activeFilter: filterParam || 'All',
       user: (req.session as any).user || null
@@ -86,7 +86,7 @@ app.get('/communities', async (req: Request, res: Response) => {
     console.error('Error fetching communities:', error);
     res.render('pages/discover', {
       communities: [],
-      filterOptions: ['All', 'Students', 'Religion', 'Families', 'Interns', 'Entrepreneurs', 'Pet-Friendly', 'Gym'],
+      filterOptions: ['All', 'Students', 'Influencer', 'Families', 'Interns', 'Entrepreneurs', 'Pet-Friendly', 'Gym'],
       //filterOptions: ['All', 'Modern', 'Young-Professionals', 'Urban', 'Beachside', 'Pet-Friendly', 'Family'],
       activeFilter: req.query.filter || 'All',
       user: (req.session as any).user || null
@@ -95,6 +95,7 @@ app.get('/communities', async (req: Request, res: Response) => {
 })
 
 // Discover page (alias for communities)
+
 app.get('/discover', async (req: Request, res: Response) => {
   try {
     const { data: communities, error } = await supabase
@@ -105,7 +106,7 @@ app.get('/discover', async (req: Request, res: Response) => {
 
     res.render('pages/discover', {
       communities: communities || [],
-      filterOptions: ['All', 'Students', 'Religion', 'Families', 'Entrepreneurs', 'Pet owners', 'Fitness enthusiasts'],
+      filterOptions: ['All', 'Students', 'Influencer', 'Families', 'Entrepreneurs', 'Pet owners', 'Fitness enthusiasts'],
       activeFilter: req.query.filter || 'All',
       user: (req.session as any).user || null
     });
@@ -113,7 +114,7 @@ app.get('/discover', async (req: Request, res: Response) => {
     console.error('Error fetching communities:', error);
     res.render('pages/discover', {
       communities: [],
-      filterOptions: ['All', 'Students', 'Religion', 'Families', 'Entrepreneurs', 'Pet owners', 'Fitness enthusiasts'],
+      filterOptions: ['All', 'Students', 'Influencer', 'Families', 'Entrepreneurs', 'Pet owners', 'Fitness enthusiasts'],
       activeFilter: req.query.filter || 'All',
       user: (req.session as any).user || null
     });
@@ -121,17 +122,73 @@ app.get('/discover', async (req: Request, res: Response) => {
 });
 
 
-app.get('/booking', (req: Request, res: Response) => {
-  res.render('pages/booking', {
-    user: (req.session as any).user || null
-  });
+
+// Booking page (with community ID from query param)
+app.get('/booking/:communityId', async (req: Request, res: Response) => {
+  try {
+    const { communityId } = req.params;
+    const { data: community, error } = await supabase
+      .from('communities')
+      .select('*')
+      .eq('id', communityId)
+      .maybeSingle();
+
+    if (error) throw error;
+    if (!community) {
+      return res.status(404).send('Community not found');
+    }
+
+    res.render('pages/booking', {
+      community,
+      user: (req.session as any).user || null
+    });
+  } catch (error) {
+    console.error('Error fetching community:', error);
+    res.status(500).send('Error loading community');
+  }
 });
 
-// Payment page
-app.get('/payment', (req: Request, res: Response) => {
-  res.render('pages/payment', {
-    user: (req.session as any).user || null
-  });
+// Payment page (with community ID and dates from query params)
+app.get('/payment/:communityId', async (req: Request, res: Response) => {
+  try {
+    const { communityId } = req.params;
+    const { checkIn, checkOut } = req.query;
+
+    const { data: community, error } = await supabase
+      .from('communities')
+      .select('*')
+      .eq('id', communityId)
+      .maybeSingle();
+
+    if (error) throw error;
+    if (!community) {
+      return res.status(404).send('Community not found');
+    }
+
+    // Calculate nights
+    const checkInDate = new Date(checkIn as string);
+    const checkOutDate = new Date(checkOut as string);
+    const nights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
+    const subtotal = community.price_per_night * nights;
+    const serviceFee = Math.round(subtotal * 0.1); // 10% service fee
+    const taxes = Math.round((subtotal + serviceFee) * 0.08); // 8% tax
+    const total = subtotal + serviceFee + taxes;
+
+    res.render('pages/payment', {
+      community,
+      checkIn,
+      checkOut,
+      nights,
+      subtotal,
+      serviceFee,
+      taxes,
+      total,
+      user: (req.session as any).user || null
+    });
+  } catch (error) {
+    console.error('Error loading payment:', error);
+    res.status(500).send('Error loading payment');
+  }
 });
 
 // FAQ page

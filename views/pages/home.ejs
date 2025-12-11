@@ -2,19 +2,21 @@
 
 <div class="hero-section">
   <div class="hero-content">
-    <h1>Find your community find and book an Affordable home</h1>
-    <div class="search-bar">
-      <input type="text" placeholder="Location" class="search-input">
-      <input type="text" placeholder="Community" class="search-input">
-      <input type="text" placeholder="Move-in-Date" class="search-input">
-      <input type="text" placeholder="Move-out-Date" class="search-input">
-      <button class="btn btn-primary">Search</button>
-    </div>
+    <h1>Find your community, book affordable housing</h1>
+    <h1 style="font-weight: normal; margin-top: 1rem;"> </h1>
+    <h2>Connect with like-minded people and find your perfect community home</h2>
     <div class="quick-filters">
       <button class="filter-tag">San Jose</button>
       <button class="filter-tag">Oakland</button>
       <button class="filter-tag">Fremont</button>
+      <button class="filter-tag">San Francisco</button>
+      <button class="filter-tag">Sacramento</button>
     </div>
+    <div style="text-align: center; margin: 2rem 0;">
+  <a href="/communities" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+    <i class="fas fa-search"></i> Browse All Communities
+  </a>
+</div>
   </div>
 </div>
 
@@ -102,46 +104,61 @@
   <main class="content-area">
     <div class="map-section">
       <div id="map" class="map-container">
-        <img src="https://images.pexels.com/photos/5605061/pexels-photo-5605061.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Map" class="map-image">
-        <div class="map-marker" style="top: 50%; left: 50%;">
-          <div class="marker-pin">A</div>
-        </div>
+        <iframe 
+          width="100%" 
+          height="400" 
+          style="border:0; border-radius: 0.75rem;" 
+          loading="lazy" 
+          allowfullscreen="" 
+          referrerpolicy="no-referrer-when-downgrade" 
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAi9HgaKLi81xbl-9li1GVe2hT6IdsJB70&q=San+Francisco,California">
+        </iframe>
       </div>
     </div>
+<!-- What's Hot Right Now Section -->
+<div class="whats-hot-section">
+  <div class="whats-hot-header">
+    <h2><i class="fas fa-fire"></i> What's Hot Right Now</h2>
+    <p>Popular communities trending this week</p>
+  </div>
 
-    <div class="communities-grid">
-      <% communities.forEach(function(community) { %>
-        <div class="community-card">
-          <div class="card-image">
-            <img src="<%= community.image_url %>" alt="<%= community.name %>">
-            <button class="favorite-btn">
-              <i class="far fa-heart"></i>
-            </button>
+  <div class="hot-communities-grid">
+    <% communities.slice(0, 4).forEach(function(community) { %>
+      <div class="community-card">
+        <div class="card-image">
+          <img src="<%= community.image_url %>" alt="<%= community.name %>">
+          <button class="favorite-btn">
+            <i class="far fa-heart"></i>
+          </button>
+          <div class="hot-badge">🔥 HOT</div>
+        </div>
+        <div class="card-content">
+          <h3><%= community.name %></h3>
+          <div class="card-tags">
+            <% (community.tags || []).slice(0, 2).forEach(function(tag) { %>
+              <span class="tag"><%= tag %></span>
+            <% }); %>
           </div>
-          <div class="card-content">
-            <h3><%= community.name %></h3>
-            <div class="card-tags">
-              <% (community.tags || []).slice(0, 3).forEach(function(tag) { %>
-                <span class="tag"><%= tag %></span>
-              <% }); %>
+          <div class="card-info">
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span><%= community.location %></span>
             </div>
-            <div class="card-info">
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span><%= community.location %></span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-users"></i>
-                <span><%= community.residents_count %> residents</span>
-              </div>
+            <div class="info-item">
+              <i class="fas fa-users"></i>
+              <span><%= community.residents_count %> residents</span>
             </div>
-            <div class="card-footer">
-              <div class="price">$<%= community.price_per_night %> / night</div>
-            </div>
+          </div>
+          <div class="card-footer">
+            <div class="price">$<%= community.price_per_night %> / night</div>
+            <a href="/community/<%= community.id %>" class="btn-view">View & Book →</a>
           </div>
         </div>
-      <% }); %>
-    </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+</div>
   </main>
 </div>
 

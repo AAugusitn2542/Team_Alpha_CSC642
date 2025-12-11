@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Community Housing Platform</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <!-- Hero Section -->
+  <div class="confirm-pay-hero">
+    <h1>Complete Your Booking</h1>
+    <p>Secure payment for your community housing</p>
+  </div>
+
+  <!-- Payment Container -->
+  <div class="confirm-pay-container">
+    <!-- Booking Summary -->
+    <div class="booking-summary">
+      <div class="community-preview">
+        <img src="<%= community.image_url || 'https://via.placeholder.com/350x250' %>" 
+             alt="<%= community.name %>"
+             onerror="this.src='https://via.placeholder.com/350x250?text=Community'">
+      </div>
+
+      <div class="community-info-box">
+        <div class="community-label">SELECTED COMMUNITY</div>
+        <h3><%= community.name %></h3>
+        <p style="color: var(--text-light); font-size: 0.95rem; margin-top: 0.5rem;">
+          <i class="fas fa-map-marker-alt"></i> <%= community.location %>, <%= community.city %>
+        </p>
+      </div>
+
+      <div class="price-breakdown">
+        <h3>Price Summary</h3>
+        
+        <div class="booking-dates" style="background: var(--light-gray); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+          <p style="margin: 0.25rem 0; font-size: 0.95rem;">
+            <strong>Check-in:</strong> <%= new Date(checkIn).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+          </p>
+          <p style="margin: 0.25rem 0; font-size: 0.95rem;">
+            <strong>Check-out:</strong> <%= new Date(checkOut).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+          </p>
+          <p style="margin: 0.25rem 0; font-size: 0.95rem;">
+            <strong>Duration:</strong> <%= nights %> night<%= nights > 1 ? 's' : '' %>
+          </p>
+        </div>
+
+        <div class="breakdown-item">
+          <span>$<%= community.price_per_night %> × <%= nights %> night<%= nights > 1 ? 's' : '' %></span>
+          <span>$<%= subtotal.toFixed(2) %></span>
+        </div>
+        <div class="breakdown-item">
+          <span>Service Fee (10%)</span>
+          <span>$<%= serviceFee.toFixed(2) %></span>
+        </div>
+        <div class="breakdown-item">
+          <span>Taxes (8%)</span>
+          <span>$<%= taxes.toFixed(2) %></span>
+        </div>
+        <div class="breakdown-divider"></div>
+        <div class="breakdown-item total">
+          <span>Total Amount Due</span>
+          <span>$<%= total.toFixed(2) %></span>
+        </div>
+      </div>
+
+      <div class="payment-badges">
+        <img src="https://cdn-icons-png.flaticon.com/128/349/349221.png" alt="Visa" class="payment-badge">
+        <img src="https://cdn-icons-png.flaticon.com/128/349/349228.png" alt="Mastercard" class="payment-badge">
+        <img src="https://cdn-icons-png.flaticon.com/128/349/349241.png" alt="PayPal" class="payment-badge">
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-form-section">
+      <form id="paymentForm">
+        <!-- Billing Information -->
+        <div class="form-section">
+          <h2>Billing Information</h2>
+          <label for="fullname">Full Name</label>
+          <input type="text" id="fullname" class="form-input" placeholder="John Doe" required>
+
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="john@example.com" required>
+
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" class="form-input" placeholder="+1 (555) 123-4567" required>
+
+          <label for="address">Billing Address</label>
+          <input type="text" id="address" class="form-input" placeholder="123 Main Street" required>
+        </div>
+
+        <!-- Card Information -->
+        <div class="form-section">
+          <h2>Card Information</h2>
+          <label for="cardname">Name on Card</label>
+          <input type="text" id="cardname" class="form-input" placeholder="John Doe" required>
+
+          <label for="cardnumber">Card Number</label>
+          <input type="text" id="cardnumber" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" required>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <label for="expiry">Expiry Date</label>
+              <input type="text" id="expiry" class="form-input" placeholder="MM/YY" maxlength="5" required>
+            </div>
+            <div>
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" class="form-input" placeholder="123" maxlength="4" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="terms-text">
+          <input type="checkbox" id="terms" required>
+          <label for="terms" style="display: inline; margin-left: 0.5rem;">
+            I agree to the <a href="#" style="color: var(--primary-color);">Terms and Conditions</a> 
+            and <a href="#" style="color: var(--primary-color);">Privacy Policy</a>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-confirm">
+          <i class="fas fa-lock"></i> Complete Payment - $<%= total.toFixed(2) %>
+        </button>
+
+        <p style="text-align: center; color: var(--text-light); margin-top: 1rem; font-size: 0.9rem;">
+          Your payment is secured and encrypted
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('paymentForm');
+
+      // Form submission
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const fullname = document.getElementById('fullname').value;
+        const email = document.getElementById('email').value;
+        const cardNumber = document.getElementById('cardnumber').value.replace(/\s/g, '');
+        
+        // Validate card number (basic check)
+        if (cardNumber.length < 13) {
+          alert('Please enter a valid card number');
+          return;
+        }
+
+        // For now, show success message
+        alert(`Payment of $<%= total.toFixed(2) %> completed successfully for <%= community.name %>!`);
+        
+        // TODO: Send payment to backend
+        // window.location.href = '/booking-confirmation';
+      });
+
+      // Card number formatting
+      document.getElementById('cardnumber').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s/g, '');
+        let formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+        e.target.value = formattedValue;
+      });
+
+      // Expiry date formatting (MM/YY)
+      document.getElementById('expiry').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+          value = value.slice(0, 2) + '/' + value.slice(2, 4);
+        }
+        e.target.value = value;
+      });
+
+      // CVV - only numbers
+      document.getElementById('cvv').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '');
+      });
+    });
+  </script>
+</body>
+</html>

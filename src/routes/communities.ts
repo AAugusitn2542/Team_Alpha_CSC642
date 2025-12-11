@@ -23,7 +23,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// Get single community details
+// Get single community details (View & Book button)
 router.get('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -38,7 +38,8 @@ router.get('/:id', async (req: Request, res: Response) => {
       return res.status(404).send('Community not found');
     }
 
-    res.render('pages/confirm-pay', {
+    // Render booking page with community details
+    res.render('pages/booking', {
       community,
       user: (req.session as any).user || null
     });
