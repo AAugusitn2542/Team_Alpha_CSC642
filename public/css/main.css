@@ -1344,7 +1344,7 @@ body {
     grid-template-columns: 1fr;
   }
 }
-/* ===== BOOKING PAGE STYLES ===== */
+/* BOOKING PAGE STYLES */
 
 .booking-container {
   display: grid;
@@ -1588,7 +1588,7 @@ body {
   opacity: 0.5;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .booking-container {
     grid-template-columns: 1fr;

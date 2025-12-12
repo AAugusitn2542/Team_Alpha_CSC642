@@ -150,17 +150,17 @@
         const email = document.getElementById('email').value;
         const cardNumber = document.getElementById('cardnumber').value.replace(/\s/g, '');
         
-        // Validate card number (basic check)
+        // Validate card number
         if (cardNumber.length < 13) {
           alert('Please enter a valid card number');
           return;
         }
 
-        // For now, show success message
+       
         alert(`Payment of $<%= total.toFixed(2) %> completed successfully for <%= community.name %>!`);
         
         // TODO: Send payment to backend
-        // window.location.href = '/booking-confirmation';
+        
       });
 
       // Card number formatting

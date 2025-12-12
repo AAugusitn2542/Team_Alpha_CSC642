@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ===== ROUTES =====
+
 
 // Home page
 app.get('/', async (req: Request, res: Response) => {
@@ -58,14 +58,13 @@ app.get('/', async (req: Request, res: Response) => {
     });
   }
 });
-// Communities page (with filtering) - ADD THIS BEFORE app.use('/community', ...)
+
 app.get('/communities', async (req: Request, res: Response) => {
   try {
     let query = supabase
       .from('communities')
       .select('*');
 
-    // Filter by tags if a filter is selected
     const filterParam = req.query.filter as string;
     if (filterParam && filterParam !== 'All') {
       query = query.contains('tags', [filterParam]);
@@ -78,7 +77,6 @@ app.get('/communities', async (req: Request, res: Response) => {
     res.render('pages/discover', {
       communities: communities || [],
       filterOptions: ['All', 'Students', 'Influencer', 'Families', 'Interns', 'Gaming-Nerds', 'Entrepreneurs', 'Pet-Friendly', 'Gym'],
-      //filterOptions: ['All', 'Modern', 'Young-Professionals', 'Urban', 'Beachside', 'Pet-Friendly', 'Family'],
       activeFilter: filterParam || 'All',
       user: (req.session as any).user || null
     });
@@ -87,14 +85,13 @@ app.get('/communities', async (req: Request, res: Response) => {
     res.render('pages/discover', {
       communities: [],
       filterOptions: ['All', 'Students', 'Influencer', 'Families', 'Interns', 'Entrepreneurs', 'Pet-Friendly', 'Gym'],
-      //filterOptions: ['All', 'Modern', 'Young-Professionals', 'Urban', 'Beachside', 'Pet-Friendly', 'Family'],
       activeFilter: req.query.filter || 'All',
       user: (req.session as any).user || null
     });
   }
 })
 
-// Discover page (alias for communities)
+// Discover page 
 
 app.get('/discover', async (req: Request, res: Response) => {
   try {
@@ -123,7 +120,7 @@ app.get('/discover', async (req: Request, res: Response) => {
 
 
 
-// Booking page (with community ID from query param)
+// Booking page 
 app.get('/booking/:communityId', async (req: Request, res: Response) => {
   try {
     const { communityId } = req.params;
@@ -148,7 +145,7 @@ app.get('/booking/:communityId', async (req: Request, res: Response) => {
   }
 });
 
-// Payment page (with community ID and dates from query params)
+// Payment page 
 app.get('/payment/:communityId', async (req: Request, res: Response) => {
   try {
     const { communityId } = req.params;
@@ -165,7 +162,7 @@ app.get('/payment/:communityId', async (req: Request, res: Response) => {
       return res.status(404).send('Community not found');
     }
 
-    // Calculate nights
+    // Calculate the total cost
     const checkInDate = new Date(checkIn as string);
     const checkOutDate = new Date(checkOut as string);
     const nights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
