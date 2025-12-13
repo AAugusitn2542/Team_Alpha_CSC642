@@ -22,10 +22,10 @@ SUPABASE ANON KEY=sb publishable 60fW7CNxkWVv 1j844AE6w_3ZW051R0
 **List of dependencies**
 
 community-housing-platform@1.0.0 C:\Users\apa10\Team_Alpha_CSC642
-├── @supabase/supabase-js@2.87.1
-├── @types/cookie-parser@1.4.10
-├── @types/ejs@3.1.5
-├── @types/express-session@1.18.2
+1. @supabase/supabase-js@2.87.1
+2.  @types/cookie-parser@1.4.10
+3.  types/ejs@3.1.5
+4.   @types/express-session@1.18.2
 ├── @types/express@4.17.25
 ├── @types/node@20.19.26
 ├── body-parser@1.20.4
