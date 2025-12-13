@@ -14,28 +14,28 @@ SUPABASE URL= https://tjcpofzsjarhmhjnxbqc.supabase.co/
 
 SUPABASE ANON KEY=sb publishable 60fW7CNxkWVv 1j844AE6w_3ZW051R0
 
+-----
+
 3. ** Start the application**
    - npm run dev
 
 ---
 
 **List of dependencies**
-
-community-housing-platform@1.0.0 C:\Users\apa10\Team_Alpha_CSC642
 1. @supabase/supabase-js@2.87.1
 2.  @types/cookie-parser@1.4.10
 3.  types/ejs@3.1.5
 4.   @types/express-session@1.18.2
-├── @types/express@4.17.25
-├── @types/node@20.19.26
-├── body-parser@1.20.4
-├── cookie-parser@1.4.7
-├── dotenv@16.6.1
-├── ejs@3.1.10
-├── express-session@1.18.2
-├── express@4.22.1
-├── nodemon@3.1.11
-├── ts-node@10.9.2
+5.   ypes/express@4.17.25
+6.   ypes/node@20.19.26
+7.   dy-parser@1.20.4
+8.   okie-parser@1.4.7
+9.   tenv@16.6.1
+10.   s@3.1.10
+11.   press-session@1.18.2
+12.   press@4.22.1
+13.   demon@3.1.11
+14.   -node@10.9.2
 
 
 
