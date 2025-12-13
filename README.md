@@ -7,7 +7,7 @@ Welcome to Team_Alpha 'Alternative AirBnb' Repo. Below are the requirements:
 **Requirements to run the project:**
 
 1. **Node.js** (v14 or higher recommended)
-
+---
 2. Create a .env with our superbase url and public key
 
 SUPABASE URL= https://tjcpofzsjarhmhjnxbqc.supabase.co/
@@ -36,6 +36,7 @@ SUPABASE ANON KEY=sb publishable 60fW7CNxkWVv 1j844AE6w_3ZW051R0
 12.   press@4.22.1
 13.   demon@3.1.11
 14.   -node@10.9.2
+---
 
 
 
